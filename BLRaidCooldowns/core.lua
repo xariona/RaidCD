@@ -26,7 +26,7 @@ BLRCD.handles = {}
 local count = 0
 function BLRCD:OnInitialize()
 	if count == 1 then return end
-	BLRCD:RegisterChatCommand("BLRCD", "SlashProcessor_BLRCD")
+	BLRCD:RegisterChatCommand("BLCD", "SlashProcessor_BLRCD")
 	
 	-- DB
 	BLRCD.db = AceDB:New("BLRCDDB", BLRCD.defaults, true)
@@ -71,10 +71,10 @@ function BLRCD:SlashProcessor_BLRCD(input)
 	v1 = v1:lower()
 
 	if v1 == "" then
-		print("|cffc41f3bBL Raid Cooldowns|r: /blrcd lock - Lock and Unlock Frame")
-		print("|cffc41f3bBL Raid Cooldowns|r: /blrcd debug - Raid talents")
-		print("|cffc41f3bBL Raid Cooldowns|r: /blrcd show - Hide/Show Main Frame")
-		print("|cffc41f3bBL Raid Cooldowns|r: /blrcd raid - Print Raid Roster and talents")		
+		print("|cffc41f3bBlood Legion Cooldowns|r: /blcd lock - Lock and Unlock Frame")
+		print("|cffc41f3bBlood Legion Cooldowns|r: /blcd debug - Raid talents")
+		print("|cffc41f3bBlood Legion Cooldowns|r: /blcd show - Hide/Show Main Frame")
+		print("|cffc41f3bBlood Legion Cooldowns|r: /blcd raid - Print Raid Roster and talents")		
 	elseif v1 == "lock" or v1 == "unlock" or v1 == "drag" or v1 == "move" or v1 == "l" then
 		BLRCD:ToggleMoversLock()	
 	elseif v1 == "raid" then
@@ -134,22 +134,6 @@ function BLRCD:StopCD(args)
 	args[4]:SetText(BLRCD:GetTotalCooldown(args[1]))
 end
 
-function BLRCD:CheckSpecial(guid,spell)
---[[
-	if LibRaidInspectMembers[guid]['class'] == 'Shaman' and spell == "Call of the Elements" then
-		for spell,value in pairs(BLRCD['handles'][guid]) do
-			if spell == "Mana Tide Totem" or spell == "Spirit Link Totem" or spell == "Healing Tide Totem" then
-				BLRCD:StopCD(value[1])
-				value[3]:Stop()
-			end
-		end
-	end
-	-- if (LibRaidInspectMembers[sourceGUID]['spec'] == "Restoration") and (spellName == "Tranquility") then
-		-- return 300
-	-- end
-	-- return 0]]
-end
-
 function BLRCD:UpdateCooldown(frame,event,unit,cooldown,text,frameicon, ...)
 	if(event == "COMBAT_LOG_EVENT_UNFILTERED") then
 		local timestamp, type,_, sourceGUID, sourceName,_,_, destGUID, destName = select(1, ...)
@@ -157,10 +141,9 @@ function BLRCD:UpdateCooldown(frame,event,unit,cooldown,text,frameicon, ...)
 			local spellId, spellName, spellSchool = select(12, ...)
 			if(spellId == cooldown['spellID']) then
 				if (LibRaidInspectMembers[sourceGUID]) then
-					--0BLRCD:CheckSpecial(sourceGUID,spellName)
 					BLRCD:StartCD(frame,cooldown,text,sourceGUID,sourceName,frameicon, spellName)
 					text:SetText(BLRCD:GetTotalCooldown(cooldown))
-	         end
+	         	end
 			end
 		 end
 	elseif(event =="GROUP_ROSTER_UPDATE") then

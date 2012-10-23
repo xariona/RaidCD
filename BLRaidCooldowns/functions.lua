@@ -30,22 +30,10 @@ end
 
 function BLRCD:CheckVisibility()
 	local frame = BLRaidCooldownBase_Frame
-	if (BLRCD.profileDB.show == "always") then
+	if(RI:GroupType() == 2) then
 		frame:Show()
-	end
-	
-	if (BLRCD.profileDB.show == "raid") then
-		if(RI:GroupType() == 2) then
-			frame:Show()
-		else
-			frame:Hide()
-		end
-	elseif (BLRCD.profileDB.show == "party") then
-		if(RI:GroupType() > 0) then
-			frame:Show()
-		else
-			frame:Hide()
-		end
+	else
+		frame:Hide()
 	end
 end
 

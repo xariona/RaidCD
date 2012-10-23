@@ -18,13 +18,21 @@ end
 
 BLRCD.frame:UnregisterAllEvents()
 BLRCD.frame:RegisterEvent("GROUP_ROSTER_UPDATE")
+BLRCD.frame:RegisterEvent("ADDON_LOADED")
 
 BLRCD.frame:SetScript("OnEvent", function(this, event, ...)
 	return BLRCD[event](BLRCD, ...)
 end)
 
+
+function BLRCD:ADDON_LOADED(name)
+	if (name == "BLRaidCooldown") then
+		print("|cffc41f3bBlood Legion Cooldowns|r: /blcd lock - Lock and Unlock Frame")
+	end
+end
+
 function BLRCD:GROUP_ROSTER_UPDATE()
-	if not(BLRCD.profileDB.show == "alawys") then
+	if not(BLRCD.profileDB.show == "always") then
 		BLRCD:CheckVisibility()
 	end
 end

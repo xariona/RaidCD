@@ -14,9 +14,9 @@ function BLRCD:SetupOptions()
 	AceConfig:RegisterOptionsTable("BLRCD", BLRCD.options, nil)
 	
 	BLRCD.optionsFrames = {}
-	BLRCD.optionsFrames.general = AceConfigDialog:AddToBlizOptions("BLRCD", "BL Raid Cooldowns", nil, "general")
-	BLRCD.optionsFrames.cooldowns = AceConfigDialog:AddToBlizOptions("BLRCD", "Cooldown Settings", "BLRCD", "cooldowns")
-	BLRCD.optionsFrames.profile = AceConfigDialog:AddToBlizOptions("BLRCD", "Profiles", "BLRCD", "profile")
+	BLRCD.optionsFrames.general = AceConfigDialog:AddToBlizOptions("BLRCD", "Blood Legion Cooldowns", nil, "general")
+	BLRCD.optionsFrames.cooldowns = AceConfigDialog:AddToBlizOptions("BLRCD", "Cooldown Settings", "Blood Legion Cooldowns", "cooldowns")
+	BLRCD.optionsFrames.profile = AceConfigDialog:AddToBlizOptions("BLRCD", "Profiles", "Blood Legion Cooldowns", "profile")
 end
 
 BLRCD.TexCoords = {.08, .92, .08, .92}
@@ -28,7 +28,7 @@ BLRCD.defaults = {
 		clickannounce = false,
 		scale = 1,
 		growth = "right",
-		show = "always",
+		show = "raid",
 		cooldown = {
 			DA   = true,
 			HOS  = true,
@@ -61,7 +61,7 @@ BLRCD.defaults = {
 
 BLRCD.options =  {
 	type = "group",
-	name = "Blood Legion Raidcooldowns",
+	name = "Blood Legion Cooldowns",
 	args = {
 		general = {
 			order = 1,
@@ -119,24 +119,7 @@ BLRCD.options =  {
 						['left'] = "Left",
 						['right'] = "Right",
 					},			
-				},	
-				show = {
-					order = 7,
-					name = "Show Option",
-					type = 'select',
-					get = function()
-						return BLRCD.profileDB.show 
-					end,
-					set = function(info, value)
-						BLRCD.profileDB.show = value
-						BLRCD:CheckVisibility()
-					end,
-					values = {
-						['always'] = "Always",
-						['raid'] = "Raid",
-						['party'] = "Party",
-					},			
-				},	
+				},
 				configure = {
 					order = 9,
 					type = "execute",
